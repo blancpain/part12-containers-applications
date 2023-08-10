@@ -3,12 +3,6 @@ const { Todo } = require("../mongo");
 const router = express.Router();
 const { getAsync, setAsync } = require("../redis/index");
 
-// let counter = 0;
-// const initialiseCounter = async () => {
-//   await setAsync("added_todos", counter);
-// };
-// initialiseCounter();
-
 /* GET todos listing. */
 router.get("/", async (_, res) => {
   const todos = await Todo.find({});
