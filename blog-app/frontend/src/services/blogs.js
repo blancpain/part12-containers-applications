@@ -1,5 +1,6 @@
 import axios from "axios";
-const baseUrl = "/api/blogs";
+import backendPort from "../utils/config";
+const baseUrl = `${backendPort}/blogs`;
 
 let token = null;
 

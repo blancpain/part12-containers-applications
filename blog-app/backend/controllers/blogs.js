@@ -1,5 +1,5 @@
 const blogsRouter = require("express").Router();
-const Blog = require("../models/blog");
+const Blog = require("../mongo/models/blog");
 const middleware = require("../utils/middleware");
 
 blogsRouter.get("/", async (request, response) => {
@@ -53,6 +53,10 @@ blogsRouter.delete(
 
     if (!blogToBeDeleted) {
       return response.status(404).json({ error: "blog not found" });
+    }
+
+    if (blogToBeDeleted.author === "Admin") {
+      return response.status(404).json({ error: "cannot delete this blog" });
     }
 
     if (user.id.toString() === blogToBeDeleted.user.toString()) {

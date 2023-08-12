@@ -1,0 +1,56 @@
+services:
+  # backend
+  # mongo db
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: the_database
+    volumes:
+      - ./backend/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+
+      - mongo_data_dev:/data/db
+    container_name: mongo-blog-dev
+
+  # server
+  server:
+    image: blog-back-dev
+    build:
+      context: ./backend/
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./backend:/usr/src/app
+    container_name: blog-back-dev
+    environment:
+      - MONGODB_URI=mongodb://the_username:the_password@mongo:27017/the_database
+      - SECRET=key
+
+  #frontend
+  app:
+    image: blog-front-dev
+    build:
+      context: ./frontend/
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./frontend:/usr/src/app
+      # for local node_modules not to override the container node_modules we need to persist the volue
+      # the other solutions is to run rebuild at start
+      - /usr/src/app/node_modules
+    container_name: blog-front-dev
+
+  # reverse proxy
+  nginx:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    container_name: blog-reverse-proxy-dev
+    depends_on:
+      - app
+      - server
+      - mongo
+
+volumes:
+  mongo_data_dev:

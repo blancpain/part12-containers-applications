@@ -14,17 +14,24 @@ const logger = require("./utils/logger");
 const config = require("./utils/config");
 const middleware = require("./utils/middleware");
 
-mongoose.set("strictQuery", false);
-
 const connectToDb = async function () {
   try {
-    await mongoose.connect(config.MONGODB_URI);
+    await mongoose.connect(config.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     logger.info("Connected to MongoDB");
   } catch (err) {
     logger.error(`Error connecting to MongoDB: ${err.message}`);
   }
 };
 connectToDb();
+
+// if (config.MONGODB_URI && !mongoose.connection.readyState)
+//   mongoose.connect(config.MONGODB_URI, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   });
 
 app.use(cors());
 app.use(express.json());

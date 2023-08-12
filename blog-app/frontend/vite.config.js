@@ -6,13 +6,14 @@ import react from "@vitejs/plugin-react-swc";
 export default defineConfig({
   build: {
     outDir: "build",
-    assetsDir: "static",
   },
   server: {
-    proxy: {
-      "/api/blogs": "http://localhost:3003",
-      "/api/login": "http://localhost:3003",
+    watch: {
+      usePolling: true,
     },
+    host: true,
+    strictPort: true,
+    port: 3000,
   },
   plugins: [react()],
   test: {

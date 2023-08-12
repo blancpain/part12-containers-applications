@@ -1,0 +1,7 @@
+# .dockerignore
+node_modules/
+node_modules
+node_modules*
+dev.Dockerfile
+.git
+.gitignore

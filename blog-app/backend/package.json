@@ -12,7 +12,6 @@
   "author": "Yasen Dimitrov",
   "license": "MIT",
   "dependencies": {
-    "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
@@ -25,6 +24,7 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.2",
+    "bcryptjs": "^2.4.3",
     "eslint": "^8.44.0",
     "jest": "^29.5.0",
     "supertest": "^6.3.3"

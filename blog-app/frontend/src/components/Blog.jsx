@@ -21,6 +21,9 @@ const Blog = ({ blog, updateBlog, loggedUser, deleteBlog }) => {
   } else if (blog.user) {
     creatorName = blog.user.name;
     username = blog.user.username;
+  } else if (blog.author === "Admin") {
+    creatorName = "Admin";
+    username = "Admin";
   } else {
     return;
   }

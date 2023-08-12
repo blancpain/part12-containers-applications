@@ -1,5 +1,6 @@
 import axios from "axios";
-const baseUrl = "/api/login";
+import backendPort from "../utils/config";
+const baseUrl = `${backendPort}/login`;
 
 const login = async (credentials) => {
   const response = await axios.post(baseUrl, credentials);
